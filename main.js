@@ -1,84 +1,122 @@
-// main.js
+document.addEventListener('DOMContentLoaded', () => {
+    const nodoPadre = document.getElementById("nodoPadre");
+    const formRegistrar = document.getElementById('formRegistrar');
+    const botonMostrar = document.getElementById('btnMostrar');
+    const listaClientes = document.getElementById('clientesList');
 
-const MAX_CLIENTES = 10;
-let clientes = JSON.parse(localStorage.getItem('clientes')) || [];
+    // Clientes preexistentes en clientes.js
+    const clientesPreexistentes = [
+        { nombre: 'Juan', edad: 30, email: 'juan@hotmail.com', telefono: '123456789' },
+        { nombre: 'María', edad: 25, email: 'maria@hotmail.com', telefono: '12345678' },
+        { nombre: 'Pedro', edad: 40, email: 'pedro@hotmail.com', telefono: '12345678' },
+        { nombre: 'Ana', edad: 22, email: 'ana@hotmail.com', telefono: '12345678' },
+        { nombre: 'Luis', edad: 35, email: 'luis@hotmail.com', telefono: '12345678' }
+    ];
 
-// Función para registrar un cliente
-function registrarCliente() {
-    const nombre = document.getElementById('nombre').value;
-    const edad = document.getElementById('edad').value;
+    // Inicializar clientes
+    let clientes = JSON.parse(localStorage.getItem('clientes')) || [];
 
-    if (nombre === '' || edad === '') {
-        alert('Por favor, complete todos los campos');
-        return;
-    }
-
-    if (clientes.length >= MAX_CLIENTES) {
-        alert('No se pueden registrar más clientes');
-        return;
-    }
-
-    const cliente = {
-        nombre: nombre,
-        edad: parseInt(edad),
-    };
-
-    clientes.push(cliente);
-    localStorage.setItem('clientes', JSON.stringify(clientes));
-
-    alert('Cliente registrado exitosamente');
-    limpiarCampos();
-    mostrarClientes();
-}
-
-// Función para mostrar los clientes registrados
-function mostrarClientes() {
-    const clientesList = document.getElementById('clientesList');
-    clientesList.innerHTML = '';
 
     if (clientes.length === 0) {
-        clientesList.innerHTML = '<p>No hay clientes registrados.</p>';
-        return;
-    }
-
-    clientes.forEach((cliente, index) => {
-        const clienteItem = document.createElement('div');
-        clienteItem.classList.add('cliente-item');
-        clienteItem.innerHTML = `<strong>${cliente.nombre}</strong> - Edad: ${cliente.edad}`;
-        
-        const deleteButton = document.createElement('button');
-        deleteButton.textContent = 'Eliminar';
-        deleteButton.onclick = () => eliminarCliente(index);
-
-        clienteItem.appendChild(deleteButton);
-        clientesList.appendChild(clienteItem);
-    });
-}
-
-// Función para eliminar un cliente
-function eliminarCliente(index) {
-    if (confirm('¿Está seguro de que desea eliminar este cliente?')) {
-        clientes.splice(index, 1);
+        clientes = clientesPreexistentes;
         localStorage.setItem('clientes', JSON.stringify(clientes));
-        mostrarClientes();
     }
-}
 
-// Función para limpiar los campos de entrada
-function limpiarCampos() {
-    document.getElementById('nombre').value = '';
-    document.getElementById('edad').value = '';
-}
+    // Función para mostrar clientes
+    function mostrarClientes() {
+        listaClientes.innerHTML = ''; 
 
-// Función para verificar si existe algún cliente mayor de edad
-function verificarMayorDeEdad() {
-    const hayMayorDeEdad = clientes.some(cliente => cliente.edad >= 18);
-    alert(hayMayorDeEdad ? 'Hay clientes mayores de edad registrados.' : 'No hay clientes mayores de edad registrados.');
-}
+        if (clientes.length === 0) {
+            listaClientes.innerHTML = '<p>No hay clientes registrados.</p>';
+            return;
+        }
 
-//LocalStorage
-document.getElementById('btnRegistrar').addEventListener('click', registrarCliente);
-document.getElementById('btnMostrar').addEventListener('click', mostrarClientes);
+        clientes.forEach((cliente, index) => {
+            const clienteItem = document.createElement('div');
+            clienteItem.classList.add('cliente-item');
+            clienteItem.innerHTML = `
+                <strong>${cliente.nombre}</strong> - 
+                Edad: ${cliente.edad}, 
+                Email: ${cliente.email}, 
+                Teléfono: ${cliente.telefono}`;
 
-// Mostrar clientes al cargar la página
-mostrarClientes();
+            const deleteButton = document.createElement('button');
+            deleteButton.textContent = 'Eliminar';
+            deleteButton.onclick = () => eliminarCliente(index);
+
+            clienteItem.appendChild(deleteButton);
+            listaClientes.appendChild(clienteItem);
+        });
+    }
+
+    // Función para eliminar clientes
+    function eliminarCliente(index) {
+        const confirmacion = confirm('¿Está seguro de que desea eliminar este cliente?');
+        if (confirmacion) {
+            clientes.splice(index, 1);
+            localStorage.setItem('clientes', JSON.stringify(clientes));
+            mostrarClientes();
+        }
+    }
+
+    // Función para registrar cliente
+    function registrarCliente(e) {
+        e.preventDefault(); // Evitar el envío del formulario
+
+        const nombre = document.getElementById('nombre').value.trim();
+        const edad = parseInt(document.getElementById('edad').value.trim());
+        const email = document.getElementById('email').value.trim();
+        const telefono = document.getElementById('telefono').value.trim();
+
+        if (!nombre || isNaN(edad) || !email || !telefono) {
+            // Mostrar un mensaje de error 
+            mostrarMensaje("Por favor, complete todos los campos correctamente.", "error");
+            return;
+        }
+
+        if (clientes.length >= 10) {
+            // Mostrar un mensaje de error 
+            mostrarMensaje("No se pueden registrar más clientes.", "error");
+            return;
+        }
+
+        const cliente = {
+            nombre: nombre,
+            edad: edad,
+            email: email,
+            telefono: telefono
+        };
+
+        clientes.push(cliente);
+        localStorage.setItem('clientes', JSON.stringify(clientes));
+
+        // Mostrar mensaje de "Agregado correctamente"
+        mostrarMensaje("Cliente agregado exitosamente.", "success");
+        mostrarClientes();
+        formRegistrar.reset(); // Limpiar los campos del formulario
+    }
+
+    // Función para mostrar mensajes de éxito o error
+    function mostrarMensaje(mensaje, tipo) {
+        const mensajeElemento = document.createElement('div');
+        mensajeElemento.className = `mensaje ${tipo}`;
+        mensajeElemento.textContent = mensaje;
+
+        // Mostrar el mensaje en el nodo padre o en otro lugar 
+        nodoPadre.appendChild(mensajeElemento);
+
+        // Desaparecer el mensaje después de unos segundos
+        setTimeout(() => {
+            mensajeElemento.remove();
+        }, 5000);
+    }
+
+    // Evento para registrar cliente
+    formRegistrar.addEventListener('submit', registrarCliente);
+
+    // Evento para mostrar clientes
+    botonMostrar.addEventListener('click', mostrarClientes);
+
+    // Mostrar clientes al cargar la página
+    mostrarClientes();
+});
