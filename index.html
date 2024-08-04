@@ -3,47 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simulador de Registro de Clientes</title>
+    <title>Registro de Clientes</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
 <body>
-    <!-- Navbar -->
-    <nav class="navbar">
-        <div class="container">
-            <ul>
-                <li><a href="#inicio">Inicio</a></li>
-                <li><a href="#servicios">Servicios</a></li>
-                <li><a href="#clientes">Clientes</a></li>
-            </ul>
-        </div>
-    </nav>
-
-    <!-- Photo Section -->
-    <div id="photoSection" class="section">
-        <h2>Bienvenido al Estudio Jurídico</h2>
-        <img src="foto-perfil.jpg" alt="Foto del Abogado">
-    </div>
-
-    <!-- Main Section -->
-    <div class="container" id="clientes">
-        <div id="main">
-            <h1>Registro de Clientes</h1>
-            <h2>Sistema de Registro de Clientes del Estudio Jurídico</h2>
-            <input type="text" id="nombre" placeholder="Nombre del cliente">
-            <input type="number" id="edad" placeholder="Edad del cliente">
-            <button id="btnRegistrar">Registrar Cliente</button>
-            <button id="btnMostrar">Mostrar Clientes</button>
-            <div id="clientesList"></div>
-        </div>
-    </div>
-
-    <!-- Servicios Section -->
-    <div id="servicios" class="section">
-        <h2>Nuestros Servicios</h2>
-        <p>Aquí puedes detallar los servicios que ofrece el estudio jurídico, como asesoramiento legal, defensa penal, entre otros.</p>
-    </div>
-
+    <h1>Registro de Clientes</h1>
+    <div id="nodoPadre"></div>
+    <form id="formRegistrar">
+        <input type="text" id="nombre" placeholder="Nombre" required>
+        <input type="text" id="edad" placeholder="Edad" required>
+        <input type="text" id="email" placeholder="Email" required>
+        <input type="text" id="telefono" placeholder="Teléfono" required>
+        <button type="submit">Registrar Cliente</button>
+    </form>
+    <button id="btnMostrar">Mostrar Clientes</button>
+    <div id="clientesList"></div>
     <script src="main.js"></script>
 </body>
 </html>
