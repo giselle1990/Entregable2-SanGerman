@@ -1,0 +1,161 @@
+/* General Styles */
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to right, #111, #222);
+    color: #333;
+}
+
+/* Container */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Headings */
+h1, h2 {
+    color: #0b0101;
+    text-align: center;
+    margin: 20px 0;
+}
+
+/* Navbar Styles */
+.navbar {
+    background-color: #222;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.navbar ul {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar li {
+    margin-right: 20px;
+}
+
+.navbar a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.navbar a:hover {
+    color: #990000;
+}
+
+/* Main Section Styles */
+#main {
+    background: linear-gradient(to bottom, #fff, #f9f9f9);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+#main input[type="text"], #main input[type="number"] {
+    width: calc(50% - 20px);
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.3s ease;
+}
+
+#main input[type="text"]:focus, #main input[type="number"]:focus {
+    border-color: #990000;
+}
+
+#main button {
+    padding: 10px 20px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 10px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+#main button:hover {
+    background-color: #990000;
+}
+
+#clientesList {
+    margin-top: 20px;
+    background-color: #f4f4f4;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+/* Photo Section Styles */
+#photoSection {
+    background: linear-gradient(to right, #990000, #333);
+    color: #fff;
+    text-align: center;
+    padding: 50px 20px;
+    margin-top: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+#photoSection img {
+    width: 150px;
+    height: auto;
+    border-radius: 50%;
+    margin-top: 10px;
+    border: 4px solid #fff;
+}
+
+/* Services Section Styles */
+#servicios {
+    background: #222;
+    color: #fff;
+    padding: 40px 20px;
+    margin-top: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+#servicios h2 {
+    color: #ff6666;
+}
+
+#servicios p {
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .navbar ul {
+        flex-direction: column;
+    }
+
+    #main input[type="text"], #main input[type="number"] {
+        width: calc(100% - 20px);
+    }
+
+    #main button {
+        width: calc(50% - 10px);
+        margin: 10px 5px;
+    }
+}
